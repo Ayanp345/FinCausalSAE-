@@ -1,0 +1,21 @@
+# FinCausalSAE — reproducible DEMO environment
+# Python 3.10–3.12
+# Tested as a coherent stack; avoid mixing arbitrary latest package versions.
+
+torch==2.11.0
+transformers==4.57.1
+tokenizers==0.22.1
+peft==0.19.1
+accelerate==1.14.0
+transformer-lens==3.7.2
+torchao>=0.16.0
+
+datasets==4.0.0
+pandas==2.2.2
+pyarrow==18.1.0
+numpy==1.26.4
+tqdm==4.67.3
+matplotlib==3.10.0
+
+# Optional: Claude-based feature labels/counterfactual generation.
+# anthropic==0.34.0

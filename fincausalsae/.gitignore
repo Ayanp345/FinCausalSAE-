@@ -1,0 +1,29 @@
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.env
+.env.*
+!.env.example
+
+# Runtime data and model artifacts
+data/raw/*
+data/processed/*
+data/counterfactuals/*
+models/fin-lora/*
+sae/checkpoints/*
+circuits/results/*
+backtest/results/*
+
+# Keep directory structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/counterfactuals/.gitkeep
+!models/fin-lora/.gitkeep
+!sae/checkpoints/.gitkeep
+!circuits/results/.gitkeep
+!backtest/results/.gitkeep
+
+# Local archives
+*.zip
+*.tar.gz
