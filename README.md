@@ -242,7 +242,6 @@ The backtest should be interpreted as an evaluation of the experimental signal, 
 
 ## Roadmap
 
-- [x] End-to-end demo pipeline
 - [x] Counterfactual corpus generation
 - [x] Lightweight TopK SAE for local development
 - [x] Causal feature patching prototype
