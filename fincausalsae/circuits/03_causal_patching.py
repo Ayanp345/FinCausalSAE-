@@ -1,39 +1,3 @@
-"""
-FinCausalSAE — Phase 3: Causal Circuit Discovery
-=================================================
-THE CORE INNOVATION vs. SAE-FiRE and all prior correlational-SAE work.
-
-SAE-FiRE finds features CORRELATED with earnings surprises.
-We find features CAUSALLY NECESSARY for the model's own financial judgment.
-
-Method: Activation Patching with SAE Feature Decomposition
-------------------------------------------------------------
-For each (real, counterfactual) pair:
-
-  1. Run model on REAL transcript -> cache layer activations
-  2. Run model on CF transcript   -> cache layer activations
-  3. Track a "financial sentiment logit difference":
-     P(positive/beat tokens) - P(negative/miss tokens) at the last position
-  4. Patch: add ONE SAE feature's (CF - real) delta into the real forward
-     pass, one feature at a time
-  5. Measure: how much does this shift the sentiment logit difference?
-  6. Features with a HIGH patching effect = CAUSAL features
-
-This produces a causal importance score per (feature, cf_type), which is
-categorically different from a correlation score: it answers "does the
-model's own computation depend on this feature?" rather than "does this
-feature happen to co-vary with the outcome?"
-
-  DEMO mode : gpt2 + the tiny SimpleTopKSAE from Phase 2, ~200 candidate
-              features, runs on CPU in well under a minute.
-  FULL mode : Llama-3.1-8B + SAELens SAE, ~5,000 candidate features,
-              needs a GPU (see SETUP_GUIDE.md).
-
-Run:
-  python circuits/03_causal_patching.py                # demo
-  python circuits/03_causal_patching.py --mode full     # real run, needs GPU
-"""
-
 import sys
 import json
 from pathlib import Path
