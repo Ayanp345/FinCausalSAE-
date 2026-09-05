@@ -1,20 +1,4 @@
-"""
-FinCausalSAE — Phase 0: Data Collection & Counterfactual Corpus
-================================================================
-Collects:
-  1. Earnings call transcripts (SEC EDGAR + HuggingFace)          [full mode]
-  2. Stock price forward returns (yfinance)                        [full mode]
-  3. EPS consensus surprise (yfinance earnings_dates)               [full mode]
-  4. A small synthetic corpus with obvious causal structure         [demo mode]
 
-Then builds paired counterfactual transcripts via controlled LLM rewriting
-(or, in demo mode, deterministic template-based rewriting so no API key
-is required to test the pipeline).
-
-Run:
-  python data/00_collect_data.py                 # demo mode (default)
-  python data/00_collect_data.py --mode full      # real data, needs network + GPU downstream
-"""
 
 import sys
 import time
