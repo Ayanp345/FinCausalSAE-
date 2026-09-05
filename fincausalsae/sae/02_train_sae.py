@@ -1,31 +1,3 @@
-"""
-FinCausalSAE — Phase 2: Train Financial SAE
-============================================
-Trains a TopK Sparse Autoencoder on MLP layer outputs of the domain-adapted
-model, so that Phase 3 can do causal patching in a sparse, interpretable
-feature basis instead of raw (entangled) neuron space.
-
-  DEMO mode : a small hand-written TopK SAE (pure PyTorch, no extra deps),
-              trained on gpt2 activations from Phase 1's tiny corpus.
-              Runs on CPU in well under a minute.
-  FULL mode : SAELens's LanguageModelSAERunner — the standard research
-              library — trained on Llama-3.1-8B activations. Needs a GPU.
-
-Both modes save an SAE object exposing `.encode(x)`, `.decode(feats)` and
-`.W_dec` (the [n_features, d_model] decoder matrix), so Phase 3's causal
-patching code works unmodified against either one.
-
-Key research idea (kept from the original design): we track how much each
-feature's activation shifts between (real, counterfactual) transcript pairs
-during/after training. Features with large shifts on a given cf_type are
-strong *candidates* for causal circuits — Phase 3 then verifies which of
-them are actually causal via activation patching (candidates != causal).
-
-Run:
-  python sae/02_train_sae.py                # demo
-  python sae/02_train_sae.py --mode full     # real run, needs GPU
-"""
-
 import sys
 from pathlib import Path
 
