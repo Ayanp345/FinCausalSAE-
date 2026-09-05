@@ -1,42 +1,11 @@
-"""
-FinCausalSAE — Shared Configuration
-====================================
-Every phase script imports from this file instead of hardcoding constants.
-
-Two modes are supported, selected via the FINCAUSAL_DEMO environment
-variable (each phase script also accepts a --mode {demo,full} CLI flag
-that sets this variable for you before config is imported):
-
-  DEMO mode (default, CPU-friendly)
-    - Uses GPT-2 small (124M params) instead of Llama-3.1-8B
-    - Uses a tiny synthetic earnings-call corpus (no network calls,
-      no yfinance, no HuggingFace dataset download required)
-    - Shrinks the SAE from 131K features to ~6K features
-    - Trains on ~200K tokens instead of 200M
-    - Runs end-to-end on a laptop CPU in a few minutes, so you can
-      verify the whole pipeline works before ever touching a GPU
-
-  FULL mode (needs a GPU — see SETUP_GUIDE.md for no-GPU options)
-    - The original research configuration: Llama-3.1-8B-Base + LoRA,
-      131K-feature TopK SAE, 200M training tokens, real market data
-
-Nothing about the *logic* differs between modes — only the scale of the
-model / data / SAE. This lets you debug the whole causal-patching
-pipeline on your own laptop before paying for GPU hours.
-"""
-
 import os
 import logging
 
 import torch
 
-# ─── MODE SELECTION ──────────────────────────────────────────────────────────
-# Set FINCAUSAL_DEMO=0 (or pass --mode full to any phase script) to switch to
-# the full research configuration. Defaults to demo mode so nobody accidentally
-# tries to load an 8B model on a CPU and waits forever wondering why.
+
 DEMO_MODE = os.environ.get("FINCAUSAL_DEMO", "1") != "0"
 
-# ─── LOGGING ─────────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)-7s | %(name)s | %(message)s",
@@ -48,7 +17,6 @@ def get_logger(name):
     return logging.getLogger(name)
 
 
-# ─── DEVICE ──────────────────────────────────────────────────────────────────
 if torch.cuda.is_available():
     DEVICE = "cuda"
 elif torch.backends.mps.is_available():  # Apple Silicon
@@ -66,7 +34,6 @@ if not DEMO_MODE and DEVICE == "cpu":
         "SETUP_GUIDE.md for free/cheap cloud GPU options."
     )
 
-# ─── MODEL / SAE / TRAINING CONSTANTS ────────────────────────────────────────
 if DEMO_MODE:
     BASE_MODEL     = "gpt2"                 # 124M params, downloads in seconds
     D_MODEL        = 768
@@ -113,7 +80,6 @@ LR_LORA      = 2e-4
 LR_SAE       = 4e-4
 L1_COEFF     = 8e-5
 
-# ─── PATHS ───────────────────────────────────────────────────────────────────
 from pathlib import Path
 
 ROOT_DIR     = Path(__file__).resolve().parent
