@@ -1,21 +1,3 @@
-"""
-FinCausalSAE — Phase 1: Domain-Adapted LoRA Fine-Tuning
-========================================================
-Fine-tunes a base LM on financial language corpus using LoRA, so that
-SAE features trained in Phase 2 are financially meaningful rather than
-generic.
-
-  DEMO mode : gpt2 (124M) on CPU, full-precision LoRA, no quantization
-              (bitsandbytes 4-bit quantization needs a GPU, so demo mode
-              skips it entirely — that's fine, gpt2 fits in RAM easily)
-  FULL mode : meta-llama/Llama-3.1-8B-Base + 4-bit QLoRA, needs a GPU
-              with >=24GB VRAM (see SETUP_GUIDE.md)
-
-Run:
-  python models/01_lora_finetune.py                # demo
-  python models/01_lora_finetune.py --mode full     # real run, needs GPU
-"""
-
 import sys
 import math
 from pathlib import Path
