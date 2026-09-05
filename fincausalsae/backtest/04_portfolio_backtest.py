@@ -1,27 +1,3 @@
-"""
-FinCausalSAE — Phase 4: Portfolio Backtest
-==========================================
-Compares three signals on a temporal holdout:
-
-  Portfolio A: Causal SAE Features (our method)
-    - Uses only features with high CAUSAL patching effect (Phase 3)
-
-  Portfolio B: Correlational SAE Features (SAE-FiRE style baseline)
-    - Uses features selected by correlation with 30-day return
-
-  Portfolio C: FinBERT Sentiment (industry baseline)
-    - Standard sentiment score from FinBERT (falls back to a simple
-      lexicon-based score if FinBERT can't be downloaded — e.g. no
-      internet access, which is common when testing in demo mode)
-
-Key hypothesis: causal features should show (1) higher Sharpe ratio,
-(2) lower decay over time, and (3) better performance on stocks with
-UNUSUAL outcomes where surface sentiment misleads.
-
-Run:
-  python backtest/04_portfolio_backtest.py                # demo
-  python backtest/04_portfolio_backtest.py --mode full     # real run, needs GPU
-"""
 
 import sys
 from pathlib import Path
